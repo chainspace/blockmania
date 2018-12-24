@@ -28,10 +28,10 @@ func initCommand(args []string) int {
 	cmd.StringVar(&configRoot, "config-root", fsutil.DefaultRootDir(), "Path to the Chainspace root directory")
 	cmd.StringVar(&registry, "registry", "", "Address of the network registry")
 	cmd.DurationVar(&roundInterval, "round-interval", 1*time.Second, "Round interval")
-	cmd.UintVar(&httpPort, "http-port", 8000, "Http port used by the node, if not specified will be incremental from 8000")
-	cmd.UintVar(&pubsubPort, "pubsub-port", 7000, "Port used for the pubsub socket, if not specified will be incremental from 7000")
+	cmd.UintVar(&httpPort, "http-port", 8000, "Http port used by the node")
+	cmd.UintVar(&pubsubPort, "pubsub-port", 7000, "Port used for the pubsub server")
 	cmd.UintVar(&nodeCount, "node-count", 4, "Number of node part of this blockmanias network")
-	cmd.BoolVar(&fixedPort, "fixed-port", true, "The HTTP/pubsub ports are incremented for each node (useful when deploying multiple node on the same host)")
+	cmd.BoolVar(&fixedPort, "fixed-port", true, "The HTTP/pubsub ports are incremented for each node, useful when deploying multiple node on the same host")
 	cmd.BoolVar(&force, "f", false, "Force re-writting the configuration folder")
 
 	cmd.Usage = func() {

@@ -257,6 +257,17 @@ func (t *Topology) TotalNodes() uint64 {
 	return t.nodeCount
 }
 
+// TotalNodes returns the total number of nodes in the network.
+func (t *Topology) Nodes() []uint64 {
+	out := []uint64{}
+	var i uint64
+	for i < t.nodeCount {
+		out = append(out, i+1)
+		i += 1
+	}
+	return out
+}
+
 // New parses the given network configuration and creates a network topology for
 // connecting to nodes.
 func New(name string, cfg *config.Network) (*Topology, error) {
