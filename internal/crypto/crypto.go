@@ -1,1 +1,1 @@
-package crypto // import "chainspace.io/prototype/internal/crypto"
+package crypto // import "chainspace.io/blockmania/internal/crypto"
