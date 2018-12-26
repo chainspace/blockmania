@@ -1,0 +1,36 @@
+#!/bin/bash
+
+if (( $# != 1 )); then
+    echo "missing nodes count";
+    exit 1;
+fi
+
+# session / network name
+session=testnet-blockmania-${1}
+
+# destroy session if exists
+tmux kill-session -t ${session}
+pkill blockmania
+fuser 8080/tcp
+
+# remove existing conf
+rm -rf ~/.blockmania/${session}
+
+# inializes the network
+blockmania init -network-name ${session} -node-count ${1}
+
+echo ">> Setting up tmux session ${session}"
+tmux new-session -d -s ${session}
+
+tot="${1}";
+for i in $(seq 1 $tot)
+do
+    tmux send-keys "blockmania run -network-name ${session} -node-id ${i} -file-log info" "C-l" "C-m"
+    if (( ${i} != $tot )); then
+	tmux split-window
+	tmux select-layout tiled
+    fi
+
+done
+
+tmux attach-session -t $session
