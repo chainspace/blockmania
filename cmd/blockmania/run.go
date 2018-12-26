@@ -11,6 +11,7 @@ import (
 	"chainspace.io/blockmania/internal/fsutil"
 	"chainspace.io/blockmania/internal/log"
 	"chainspace.io/blockmania/node"
+	"chainspace.io/blockmania/rest"
 )
 
 func runCommand(args []string) int {
@@ -87,21 +88,26 @@ func runCommand(args []string) int {
 	}
 
 	// init/start the node
-	var s *node.Server
-	s, err = node.Run(cfg)
+	nodesrv, err := node.Run(cfg)
 	if err != nil {
 		fmt.Fprintf(cmd.Output(), "Could not start node-%v, %v", nodeID, err)
 		return 1
 	}
 
+	restsrv := rest.New(cfg.Node.HTTP.Port, nodesrv)
+	restsrv.Start()
+
 	defer func() {
-		if s != nil {
-			s.Shutdown()
+		if restsrv != nil {
+			restsrv.Shutdown()
+		}
+		if nodesrv != nil {
+			nodesrv.Shutdown()
 		}
 	}()
 
 	c := make(chan os.Signal, 1)
-	signal.Notify(c, syscall.SIGINT, syscall.SIGKILL)
+	signal.Notify(c, syscall.SIGINT, syscall.SIGKILL, syscall.SIGTERM)
 	<-c
 
 	return 0

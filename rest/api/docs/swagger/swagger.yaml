@@ -1,0 +1,68 @@
+basePath: '{{.BasePath}}'
+definitions:
+  api.Response:
+    properties:
+      error:
+        type: string
+    type: object
+  api.TransactionRequest:
+    properties:
+      tx:
+        items:
+          type: integer
+        type: array
+    type: object
+  api.TransactionsRequest:
+    properties:
+      txs:
+        items:
+          type: '&{%!s(token.Pos=410) <nil> byte}'
+        type: array
+    type: object
+host: '{{.Host}}'
+info:
+  contact: {}
+  description: Add a list of new transctions in the blockchain
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  termsOfService: http://swagger.io/terms/
+  title: blockmania API
+  version: "1.0"
+paths:
+  /api/transaction:
+    post:
+      consumes:
+      - application/json
+      description: Add a list of new transctions in the blockchain
+      operationId: addTransctions
+      parameters:
+      - description: transactions
+        in: body
+        name: transactions
+        required: true
+        schema:
+          $ref: '#/definitions/api.TransactionsRequest'
+          type: object
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/api.Response'
+            type: object
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/api.Response'
+            type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/api.Response'
+            type: object
+      summary: Add a list of new transactions in the blockchain
+      tags:
+      - blockmania
+swagger: "2.0"
