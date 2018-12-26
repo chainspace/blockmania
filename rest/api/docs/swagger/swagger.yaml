@@ -34,8 +34,43 @@ paths:
     post:
       consumes:
       - application/json
+      description: Add a new transction in the blockchain
+      operationId: addTransction
+      parameters:
+      - description: transaction
+        in: body
+        name: transaction
+        required: true
+        schema:
+          $ref: '#/definitions/api.TransactionRequest'
+          type: object
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/api.Response'
+            type: object
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/api.Response'
+            type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/api.Response'
+            type: object
+      summary: Add a new transaction in the blockchain
+      tags:
+      - blockmania
+  /api/transactions:
+    post:
+      consumes:
+      - application/json
       description: Add a list of new transctions in the blockchain
-      operationId: addTransctions
+      operationId: addTransactions
       parameters:
       - description: transactions
         in: body

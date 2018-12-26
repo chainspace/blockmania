@@ -64,14 +64,18 @@ func (r *Router) addTransaction(c *gin.Context) {
 		c.JSON(http.StatusBadRequest, Response{Error: err.Error()})
 		return
 	}
-
+	err := r.srv.AddTransaction(req.Tx)
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, Response{Error: err.Error()})
+		return
+	}
 	c.JSON(http.StatusOK, Response{})
 }
 
 // addTransactions
 // @Summary Add a list of new transactions in the blockchain
 // @Description Add a list of new transctions in the blockchain
-// @ID addTransctions
+// @ID addTransactions
 // @Accept  json
 // @Produce  json
 // @Tags blockmania
@@ -79,13 +83,18 @@ func (r *Router) addTransaction(c *gin.Context) {
 // @Success 200 {object} api.Response
 // @Success 400 {object} api.Response
 // @Success 500 {object} api.Response
-// @Router /api/transaction [post]
+// @Router /api/transactions [post]
 func (r *Router) addTransactions(c *gin.Context) {
 	req := TransactionsRequest{}
 	if err := c.BindJSON(&req); err != nil {
 		c.JSON(http.StatusBadRequest, Response{Error: err.Error()})
 		return
 	}
-
+	err := r.srv.AddTransactions(req.Txs)
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, Response{Error: err.Error()})
+		return
+	}
 	c.JSON(http.StatusOK, Response{})
+
 }

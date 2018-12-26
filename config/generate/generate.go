@@ -17,6 +17,7 @@ import (
 	"chainspace.io/blockmania/internal/fsutil"
 	"chainspace.io/blockmania/internal/log"
 	"chainspace.io/blockmania/internal/log/fld"
+
 	yaml "gopkg.in/yaml.v2"
 )
 

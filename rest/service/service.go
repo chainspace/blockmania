@@ -16,9 +16,15 @@ func New(node *node.Server) Service {
 }
 
 func (s *service) AddTransaction(tx []byte) error {
-	return nil
+	return s.node.Broadcast.AddTransaction(tx, 0)
 }
 
 func (s *service) AddTransactions(txs [][]byte) error {
+	for _, tx := range txs {
+		err := s.node.Broadcast.AddTransaction(tx, 0)
+		if err != nil {
+			return err
+		}
+	}
 	return nil
 }

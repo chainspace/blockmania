@@ -16,6 +16,57 @@
     "paths": {
         "/api/transaction": {
             "post": {
+                "description": "Add a new transction in the blockchain",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "blockmania"
+                ],
+                "summary": "Add a new transaction in the blockchain",
+                "operationId": "addTransction",
+                "parameters": [
+                    {
+                        "description": "transaction",
+                        "name": "transaction",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "type": "object",
+                            "$ref": "#/definitions/api.TransactionRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "object",
+                            "$ref": "#/definitions/api.Response"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "type": "object",
+                            "$ref": "#/definitions/api.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "type": "object",
+                            "$ref": "#/definitions/api.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/transactions": {
+            "post": {
                 "description": "Add a list of new transctions in the blockchain",
                 "consumes": [
                     "application/json"
@@ -27,7 +78,7 @@
                     "blockmania"
                 ],
                 "summary": "Add a list of new transactions in the blockchain",
-                "operationId": "addTransctions",
+                "operationId": "addTransactions",
                 "parameters": [
                     {
                         "description": "transactions",
