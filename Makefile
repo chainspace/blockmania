@@ -1,6 +1,9 @@
 
-install:
+install: pubsublistener ## intall the project binaries
 	go install chainspace.io/blockmania/cmd/blockmania
+
+pubsublistener:
+	go install chainspace.io/blockmania/cmd/pubsublistener
 
 swaggerdocs: ## generte the swaggerdocs for the rest server
 	rm -rf rest/api/docs && swag init -g rest/api/api.go && mv docs rest/api/docs

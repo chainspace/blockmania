@@ -11,7 +11,9 @@ import (
 	"chainspace.io/blockmania/internal/fsutil"
 	"chainspace.io/blockmania/internal/log"
 	"chainspace.io/blockmania/node"
+	"chainspace.io/blockmania/pubsub"
 	"chainspace.io/blockmania/rest"
+	"chainspace.io/blockmania/txlistener"
 )
 
 func runCommand(args []string) int {
@@ -87,6 +89,18 @@ func runCommand(args []string) int {
 		}
 	}
 
+	// init pubsub
+	pscfg := pubsub.Config{
+		Port:      cfg.Node.Pubsub.Port,
+		NetworkID: cfg.Network.ID,
+		NodeID:    cfg.NodeID,
+	}
+	pubsubsrv, err := pubsub.New(&pscfg)
+	if err != nil {
+		fmt.Fprintf(cmd.Output(), "Could not start pubsub on node-%v, %v", nodeID, err)
+		return 1
+	}
+
 	// init/start the node
 	nodesrv, err := node.Run(cfg)
 	if err != nil {
@@ -97,7 +111,14 @@ func runCommand(args []string) int {
 	restsrv := rest.New(cfg.Node.HTTP.Port, nodesrv)
 	restsrv.Start()
 
+	// init tx delivery listener
+	lst := txlistener.New(nodesrv, pubsubsrv)
+	_ = lst
+
 	defer func() {
+		if pubsubsrv != nil {
+			pubsubsrv.Close()
+		}
 		if restsrv != nil {
 			restsrv.Shutdown()
 		}
