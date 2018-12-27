@@ -3,6 +3,8 @@ package api
 import (
 	"net/http"
 
+	"chainspace.io/blockmania/internal/log"
+	"chainspace.io/blockmania/internal/log/fld"
 	_ "chainspace.io/blockmania/rest/api/docs"
 	"chainspace.io/blockmania/rest/service"
 
@@ -14,7 +16,9 @@ import (
 
 type Router struct {
 	*gin.Engine
-	srv service.Service
+	srv        service.Service
+	wssrv      service.WSService
+	wsupgrader WSUpgrader
 }
 
 // @title blockmania API
@@ -25,10 +29,12 @@ type Router struct {
 // @license.name Apache 2.0
 // @license.url http://www.apache.org/licenses/LICENSE-2.0.html
 
-func New(srv service.Service) *Router {
+func New(srv service.Service, wssrv service.WSService) *Router {
 	r := Router{
-		Engine: gin.Default(),
-		srv:    srv,
+		Engine:     gin.Default(),
+		srv:        srv,
+		wssrv:      wssrv,
+		wsupgrader: upgrader{},
 	}
 	r.Use(cors.Default())
 
@@ -38,6 +44,7 @@ func New(srv service.Service) *Router {
 	// endpoints
 	r.POST("api/transaction", r.addTransaction)
 	r.POST("api/transactions", r.addTransactions)
+	r.GET("/api/pubsub/ws", r.websocket)
 
 	// healthcheck
 	r.GET("/healthcheck", func(c *gin.Context) {
@@ -97,4 +104,28 @@ func (r *Router) addTransactions(c *gin.Context) {
 	}
 	c.JSON(http.StatusOK, Response{})
 
+}
+
+// websocket Initiate a websocket connection
+// @Summary Initiate a websocket connection in order to subscribed to object saved in chainspace by the current node
+// @Description Iniate a websocket connection
+// @ID websocket
+// @Tags pubsub
+// @Success 204
+// @Failure 500 {object} api.Response
+// @Router /api/pubsub/ws [get]
+func (r *Router) websocket(c *gin.Context) {
+	wc, err := r.wsupgrader.Upgrade(c.Writer, c.Request)
+	if err != nil {
+		log.Error("unable to upgrade ws connection", fld.Err(err))
+		c.JSON(http.StatusInternalServerError, Response{err.Error()})
+		return
+	}
+
+	if status, err := r.wssrv.Websocket(c.Request.RemoteAddr, wc); err != nil {
+		log.Error("unexpected closed websocket connection", fld.Err(err))
+		c.JSON(status, Response{err.Error()})
+		return
+	}
+	c.Status(http.StatusNoContent)
 }

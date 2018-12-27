@@ -24,7 +24,7 @@ type Server interface {
 	RegisterNotifier(n Notifier)
 }
 
-type Notifier func(internal.Payload)
+type Notifier func(nodeID uint64, tx []byte)
 
 type server struct {
 	port      uint
@@ -69,7 +69,7 @@ func (s *server) Publish(tx []byte) {
 	}
 	// send to customs notifiers
 	for _, notify := range s.notifiers {
-		notify(payload)
+		notify(payload.NodeID, payload.Tx)
 	}
 
 	b, _ := json.Marshal(&payload)

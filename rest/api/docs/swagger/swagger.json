@@ -1,7 +1,7 @@
 {
     "swagger": "2.0",
     "info": {
-        "description": "Add a list of new transctions in the blockchain",
+        "description": "Iniate a websocket connection",
         "title": "blockmania API",
         "termsOfService": "http://swagger.io/terms/",
         "contact": {},
@@ -14,6 +14,26 @@
     "host": "{{.Host}}",
     "basePath": "{{.BasePath}}",
     "paths": {
+        "/api/pubsub/ws": {
+            "get": {
+                "description": "Iniate a websocket connection",
+                "tags": [
+                    "pubsub"
+                ],
+                "summary": "Initiate a websocket connection in order to subscribed to object saved in chainspace by the current node",
+                "operationId": "websocket",
+                "responses": {
+                    "204": {},
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "type": "object",
+                            "$ref": "#/definitions/api.Response"
+                        }
+                    }
+                }
+            }
+        },
         "/api/transaction": {
             "post": {
                 "description": "Add a new transction in the blockchain",

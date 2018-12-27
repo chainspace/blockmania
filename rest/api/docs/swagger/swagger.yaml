@@ -22,7 +22,7 @@ definitions:
 host: '{{.Host}}'
 info:
   contact: {}
-  description: Add a list of new transctions in the blockchain
+  description: Iniate a websocket connection
   license:
     name: Apache 2.0
     url: http://www.apache.org/licenses/LICENSE-2.0.html
@@ -30,6 +30,21 @@ info:
   title: blockmania API
   version: "1.0"
 paths:
+  /api/pubsub/ws:
+    get:
+      description: Iniate a websocket connection
+      operationId: websocket
+      responses:
+        "204": {}
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/api.Response'
+            type: object
+      summary: Initiate a websocket connection in order to subscribed to object saved
+        in chainspace by the current node
+      tags:
+      - pubsub
   /api/transaction:
     post:
       consumes:

@@ -8,25 +8,33 @@ import (
 	"sync"
 
 	"chainspace.io/blockmania/node"
+	"chainspace.io/blockmania/pubsub"
 	"chainspace.io/blockmania/rest/api"
 	"chainspace.io/blockmania/rest/service"
 )
 
 type Server struct {
 	port   uint
+	ps     pubsub.Server
 	router *api.Router
 	srv    *http.Server
 	wg     *sync.WaitGroup
 }
 
-func New(port uint, node *node.Server) *Server {
+func New(port uint, node *node.Server, ps pubsub.Server) *Server {
 	srv := service.New(node)
-	router := api.New(srv)
+	wssrv := service.NewWS(context.Background(), ps)
+	router := api.New(srv, wssrv)
 	httpsrv := &http.Server{
 		Addr:    fmt.Sprintf(":%v", port),
 		Handler: router,
 	}
-	return &Server{port, router, httpsrv, &sync.WaitGroup{}}
+	return &Server{
+		port:   port,
+		router: router,
+		srv:    httpsrv,
+		wg:     &sync.WaitGroup{},
+	}
 }
 
 func (s *Server) Start() {

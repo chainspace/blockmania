@@ -108,7 +108,7 @@ func runCommand(args []string) int {
 		return 1
 	}
 
-	restsrv := rest.New(cfg.Node.HTTP.Port, nodesrv)
+	restsrv := rest.New(cfg.Node.HTTP.Port, nodesrv, pubsubsrv)
 	restsrv.Start()
 
 	// init tx delivery listener
