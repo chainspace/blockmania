@@ -22,7 +22,6 @@ import (
 	"chainspace.io/blockmania/network"
 	"chainspace.io/blockmania/service"
 	"github.com/gogo/protobuf/proto"
-	"github.com/tav/golly/process"
 )
 
 const (
@@ -225,37 +224,41 @@ func createDir(path string) error {
 	return nil
 }
 
-// Run initialises a node with the given config.
-func Run(cfg *Config) (*Server, error) {
+// Init initialize the the fs for the node runtime
+func EnsureRuntimeDirs(cfg *Config) (string, error) {
 	var err error
-
 	// Initialise the runtime directory for the node.
 	dir := cfg.Directory
 	if dir == "" {
-		return nil, errDirectoryMissing
+		return "", errDirectoryMissing
 	}
+
 	if !filepath.IsAbs(dir) {
 		if dir, err = filepath.Abs(dir); err != nil {
-			return nil, err
+			return "", err
 		}
 	}
 
 	if err := createDir(dir); err != nil {
-		return nil, err
-	}
-	if err := process.Init(dir, "blockmania"); err != nil {
-		return nil, err
+		return "", err
 	}
 
 	if cfg.Node.Logging.FileLevel >= log.DebugLevel && cfg.Node.Logging.FilePath != "" {
 		logfile := filepath.Join(dir, cfg.Node.Logging.FilePath)
 		if err := createDir(filepath.Dir(logfile)); err != nil {
-			return nil, err
+			return "", err
 		}
 		if err := log.ToFile(logfile, cfg.Node.Logging.FileLevel); err != nil {
 			log.Fatal("Could not initialise the file logger", fld.Err(err))
 		}
 	}
+
+	return dir, nil
+}
+
+// Run initialises a node with the given config.
+func Run(dir string, cfg *Config) (*Server, error) {
+	var err error
 
 	// Initialise the topology.
 	top, err := network.New(cfg.NetworkName, cfg.Network)

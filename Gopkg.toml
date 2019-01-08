@@ -39,15 +39,15 @@
 
 [[constraint]]
   branch = "master"
-  name = "github.com/tav/golly"
-
-[[constraint]]
-  branch = "master"
   name = "golang.org/x/crypto"
 
 [[constraint]]
   name = "gopkg.in/yaml.v2"
   version = "2.2.2"
+
+[[override]]
+  name = "gopkg.in/fsnotify.v1"
+  source = "https://github.com/fsnotify/fsnotify.git"
 
 [prune]
   go-tests = true

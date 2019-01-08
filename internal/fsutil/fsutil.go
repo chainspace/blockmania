@@ -3,8 +3,6 @@ package fsutil
 import (
 	"fmt"
 	"os"
-
-	gollyfsutil "github.com/tav/golly/fsutil"
 )
 
 const (
@@ -26,8 +24,28 @@ func EnsureDir(path string) error {
 	return nil
 }
 
+type NotFound struct {
+	path string
+}
+
+func (err *NotFound) Error() string {
+	return fmt.Sprintf("not found: %s", err.path)
+}
+
+// Exists returns whether a link exists at a given filesystem path.
+func Exists(path string) (bool, error) {
+	_, err := os.Stat(path)
+	if err == nil {
+		return true, nil
+	}
+	if os.IsNotExist(err) {
+		return false, &NotFound{path}
+	}
+	return false, err
+}
+
 func CreateUnlessExists(path string) error {
-	if exists, _ := gollyfsutil.Exists(path); exists {
+	if exists, _ := Exists(path); exists {
 		return fmt.Errorf("Directory `%v` already exists", path)
 	}
 	if err := os.Mkdir(path, dirPerms); err != nil {

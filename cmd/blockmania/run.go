@@ -5,15 +5,18 @@ import (
 	"fmt"
 	"os"
 	"os/signal"
+	"path/filepath"
 	"strings"
 	"syscall"
 
+	"chainspace.io/blockmania/internal/exitutil"
 	"chainspace.io/blockmania/internal/fsutil"
 	"chainspace.io/blockmania/internal/log"
 	"chainspace.io/blockmania/node"
 	"chainspace.io/blockmania/pubsub"
 	"chainspace.io/blockmania/rest"
 	"chainspace.io/blockmania/txlistener"
+	"github.com/gofrs/flock"
 )
 
 func runCommand(args []string) int {
@@ -89,6 +92,26 @@ func runCommand(args []string) int {
 		}
 	}
 
+	// initialize the runtime directory of the node
+	rdir, err := node.EnsureRuntimeDirs(cfg)
+	if err != nil {
+		fmt.Fprintf(cmd.Output(), "Could not initialize node-%v runtime directory, %v\n", nodeID, err)
+		return 1
+	}
+
+	// create the lock file for the node
+	fileLock := flock.New(filepath.Join(rdir, "blockmania.lock"))
+	locked, err := fileLock.TryLock()
+	if err != nil {
+		fmt.Fprintf(cmd.Output(), "Could not acquire lock for node-%v, %v\n", nodeID, err)
+		return 1
+	}
+
+	if !locked {
+		fmt.Fprintf(cmd.Output(), "Could not acquire lock for node-%v\n", nodeID)
+		return 1
+	}
+
 	// init pubsub
 	pscfg := pubsub.Config{
 		Port:      cfg.Node.Pubsub.Port,
@@ -97,14 +120,14 @@ func runCommand(args []string) int {
 	}
 	pubsubsrv, err := pubsub.New(&pscfg)
 	if err != nil {
-		fmt.Fprintf(cmd.Output(), "Could not start pubsub on node-%v, %v", nodeID, err)
+		fmt.Fprintf(cmd.Output(), "Could not start pubsub on node-%v, %v\n", nodeID, err)
 		return 1
 	}
 
 	// init/start the node
-	nodesrv, err := node.Run(cfg)
+	nodesrv, err := node.Run(rdir, cfg)
 	if err != nil {
-		fmt.Fprintf(cmd.Output(), "Could not start node-%v, %v", nodeID, err)
+		fmt.Fprintf(cmd.Output(), "Could not start node-%v, %v\n", nodeID, err)
 		return 1
 	}
 
@@ -115,7 +138,7 @@ func runCommand(args []string) int {
 	lst := txlistener.New(nodesrv, pubsubsrv)
 	_ = lst
 
-	defer func() {
+	cleanup := func() {
 		if pubsubsrv != nil {
 			pubsubsrv.Close()
 		}
@@ -125,7 +148,15 @@ func runCommand(args []string) int {
 		if nodesrv != nil {
 			nodesrv.Shutdown()
 		}
-	}()
+		if fileLock != nil {
+			fileLock.Unlock()
+		}
+	}
+
+	// defer call to cleanup if we exit normally
+	defer cleanup()
+	// register call with AtExit in the case we exit with log.Fatal
+	exitutil.AtExit(cleanup)
 
 	c := make(chan os.Signal, 1)
 	signal.Notify(c, syscall.SIGINT, syscall.SIGKILL, syscall.SIGTERM)

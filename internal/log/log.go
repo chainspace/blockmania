@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/tav/golly/process"
+	"chainspace.io/blockmania/internal/exitutil"
 )
 
 var (
@@ -86,7 +86,7 @@ func With(fields ...Field) *Logger {
 }
 
 func init() {
-	process.SetExitHandler(func() {
+	exitutil.AtExit(func() {
 		os.Stderr.Sync()
 		fileMu.Lock()
 		if logFile != nil {

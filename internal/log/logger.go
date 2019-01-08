@@ -7,7 +7,7 @@ import (
 	"sync"
 	"time"
 
-	"github.com/tav/golly/process"
+	"chainspace.io/blockmania/internal/exitutil"
 )
 
 var bufpool = sync.Pool{
@@ -86,7 +86,7 @@ func (l *Logger) Errorf(format string, args ...interface{}) {
 // Fatal logs the given text and fields at FatalLevel.
 func (l *Logger) Fatal(text string, fields ...Field) {
 	l.log(FatalLevel, text, fields)
-	process.Exit(1)
+	exitutil.Exit(1)
 }
 
 // Fatalf formats similarly to Printf and logs the resulting output at the

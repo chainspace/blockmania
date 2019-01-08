@@ -4,6 +4,8 @@ import (
 	"fmt"
 	"os"
 	"strings"
+
+	"chainspace.io/blockmania/internal/exitutil"
 )
 
 func main() {
@@ -28,7 +30,7 @@ func main() {
 		}
 	}
 
-	os.Exit(retVal)
+	exitutil.Exit(retVal)
 }
 
 func printHelp() {

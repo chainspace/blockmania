@@ -16,6 +16,7 @@ import (
 	"chainspace.io/blockmania/blockmania"
 	"chainspace.io/blockmania/config"
 	"chainspace.io/blockmania/internal/crypto/signature"
+	"chainspace.io/blockmania/internal/exitutil"
 	"chainspace.io/blockmania/internal/log"
 	"chainspace.io/blockmania/internal/log/fld"
 	"chainspace.io/blockmania/network"
@@ -23,7 +24,6 @@ import (
 
 	"github.com/dgraph-io/badger"
 	"github.com/gogo/protobuf/proto"
-	"github.com/tav/golly/process"
 )
 
 var errTransactionTooLarge = errors.New("broadcast: transaction is too large")
@@ -1001,7 +1001,8 @@ func New(ctx context.Context, cfg *Config, top *network.Topology) (*Service, err
 		db:        db,
 		nodeCount: len(cfg.Peers) + 1,
 	}
-	process.SetExitHandler(func() {
+
+	exitutil.AtExit(func() {
 		store.mu.Lock()
 		defer store.mu.Unlock()
 		if store.closed {
@@ -1013,6 +1014,7 @@ func New(ctx context.Context, cfg *Config, top *network.Topology) (*Service, err
 			log.Error("Could not close the broadcast DB successfully", fld.Err(err))
 		}
 	})
+
 	refSizeLimit, err := cfg.NetConsensus.BlockReferencesSizeLimit.Int()
 	if err != nil {
 		return nil, err
