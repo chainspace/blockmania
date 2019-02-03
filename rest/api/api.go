@@ -24,7 +24,6 @@ type Router struct {
 // @title blockmania API
 // @version 1.0
 // @description blockmania endpoints
-// @termsOfService http://swagger.io/terms/
 
 // @license.name Apache 2.0
 // @license.url http://www.apache.org/licenses/LICENSE-2.0.html
