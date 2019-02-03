@@ -1,4 +1,3 @@
-basePath: '{{.BasePath}}'
 definitions:
   api.Response:
     properties:
@@ -9,7 +8,7 @@ definitions:
     properties:
       tx:
         items:
-          type: integer
+          type: byte
         type: array
     type: object
   api.TransactionsRequest:
@@ -19,20 +18,13 @@ definitions:
           type: '&{%!s(token.Pos=410) <nil> byte}'
         type: array
     type: object
-host: '{{.Host}}'
 info:
   contact: {}
-  description: Iniate a websocket connection
-  license:
-    name: Apache 2.0
-    url: http://www.apache.org/licenses/LICENSE-2.0.html
-  termsOfService: http://swagger.io/terms/
-  title: blockmania API
-  version: "1.0"
+  license: {}
 paths:
   /api/pubsub/ws:
     get:
-      description: Iniate a websocket connection
+      description: Initiate a websocket connection
       operationId: websocket
       responses:
         "204": {}
@@ -41,7 +33,7 @@ paths:
           schema:
             $ref: '#/definitions/api.Response'
             type: object
-      summary: Initiate a websocket connection in order to subscribed to object saved
+      summary: Initiate a websocket connection in order to subscribe to objects saved
         in chainspace by the current node
       tags:
       - pubsub
@@ -49,8 +41,8 @@ paths:
     post:
       consumes:
       - application/json
-      description: Add a new transction in the blockchain
-      operationId: addTransction
+      description: Add a new transaction in the blockchain
+      operationId: addTransaction
       parameters:
       - description: transaction
         in: body
@@ -84,7 +76,7 @@ paths:
     post:
       consumes:
       - application/json
-      description: Add a list of new transctions in the blockchain
+      description: Add a list of new transactions in the blockchain
       operationId: addTransactions
       parameters:
       - description: transactions
