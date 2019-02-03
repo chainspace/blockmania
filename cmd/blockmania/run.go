@@ -57,7 +57,7 @@ func runCommand(args []string) int {
 		return 1
 	}
 
-	// setup loging
+	// setup logging
 	if len(consoleLog) > 0 {
 		switch consoleLog {
 		case "debug":
