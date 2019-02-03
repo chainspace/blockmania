@@ -55,8 +55,8 @@ func New(srv service.Service, wssrv service.WSService) *Router {
 
 // addTransaction
 // @Summary Add a new transaction in the blockchain
-// @Description Add a new transction in the blockchain
-// @ID addTransction
+// @Description Add a new transaction in the blockchain
+// @ID addTransaction
 // @Accept  json
 // @Produce  json
 // @Tags blockmania
@@ -81,7 +81,7 @@ func (r *Router) addTransaction(c *gin.Context) {
 
 // addTransactions
 // @Summary Add a list of new transactions in the blockchain
-// @Description Add a list of new transctions in the blockchain
+// @Description Add a list of new transactions in the blockchain
 // @ID addTransactions
 // @Accept  json
 // @Produce  json
@@ -107,8 +107,8 @@ func (r *Router) addTransactions(c *gin.Context) {
 }
 
 // websocket Initiate a websocket connection
-// @Summary Initiate a websocket connection in order to subscribed to object saved in chainspace by the current node
-// @Description Iniate a websocket connection
+// @Summary Initiate a websocket connection in order to subscribe to objects saved in chainspace by the current node
+// @Description Initiate a websocket connection
 // @ID websocket
 // @Tags pubsub
 // @Success 204
