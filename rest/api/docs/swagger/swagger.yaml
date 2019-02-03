@@ -20,7 +20,13 @@ definitions:
     type: object
 info:
   contact: {}
-  license: {}
+  description: Initiate a websocket connection
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  termsOfService: http://swagger.io/terms/
+  title: blockmania API
+  version: "1.0"
 paths:
   /api/pubsub/ws:
     get:
