@@ -25,8 +25,8 @@ type Router struct {
 // @version 1.0
 // @description blockmania endpoints
 
-// @license.name Apache 2.0
-// @license.url http://www.apache.org/licenses/LICENSE-2.0.html
+// @license.name MIT
+// @license.url https://github.com/chainspace/blockmania/license
 
 func New(srv service.Service, wssrv service.WSService) *Router {
 	r := Router{
