@@ -35,11 +35,11 @@ type Config struct {
 // broadcasting to each other.
 type Graph struct {
 	blocks     []*blockInfo
-	cb         func(*Interpreted)
+	callback   func(*Interpreted)
 	ctx        context.Context
 	entries    chan *BlockGraph
 	max        map[BlockID]uint64
-	mu         sync.Mutex // protects blocks, max
+	mutex      sync.Mutex // protects blocks, max
 	nodeCount  int
 	nodes      []uint64
 	quorumf1   int
@@ -99,7 +99,7 @@ func (graph *Graph) deliverRound(round uint64, hashes map[uint64]string) {
 		return blocks[i].Hash < blocks[j].Hash
 	})
 	delete(graph.resolved, round)
-	graph.mu.Lock()
+	graph.mutex.Lock()
 	consumed := graph.blocks[0].data.Block.Round - 1
 	idx := 0
 	for i, info := range graph.blocks {
@@ -123,8 +123,8 @@ func (graph *Graph) deliverRound(round uint64, hashes map[uint64]string) {
 		log.Debug("Mem usage:", log.Int("g.max", len(graph.max)), log.Int("g.statess", len(graph.statess)),
 			log.Int("g.blocks", len(graph.blocks)))
 	}
-	graph.mu.Unlock()
-	graph.cb(&Interpreted{
+	graph.mutex.Unlock()
+	graph.callback(&Interpreted{
 		Blocks:   blocks,
 		Consumed: consumed,
 		Round:    round,
@@ -441,7 +441,7 @@ func (graph *Graph) run() {
 		select {
 		case data := <-graph.entries:
 			entries := make([]*entry, len(data.Deps))
-			graph.mu.Lock()
+			graph.mutex.Lock()
 			max := data.Block.Round
 			round := graph.round
 			for i, dep := range data.Deps {
@@ -501,7 +501,7 @@ func (graph *Graph) run() {
 				data: data,
 				max:  max,
 			})
-			graph.mu.Unlock()
+			graph.mutex.Unlock()
 			for _, e := range entries {
 				graph.process(e)
 			}
@@ -534,7 +534,7 @@ func New(ctx context.Context, cfg *Config, cb func(*Interpreted)) *Graph {
 	f := (len(cfg.Nodes) - 1) / 3
 	g := &Graph{
 		blocks:     []*blockInfo{},
-		cb:         cb,
+		callback:   cb,
 		ctx:        ctx,
 		entries:    make(chan *BlockGraph, 10000),
 		max:        map[BlockID]uint64{},
