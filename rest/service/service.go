@@ -1,6 +1,6 @@
 package service
 
-import "chainspace.io/blockmania/node"
+import "github.com/chainspace/blockmania/node"
 
 type service struct {
 	node *node.Server

@@ -7,7 +7,7 @@ import (
 	"net/http"
 	"sync"
 
-	"chainspace.io/blockmania/pubsub"
+	"github.com/chainspace/blockmania/pubsub"
 	"github.com/gorilla/websocket"
 )
 

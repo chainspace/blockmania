@@ -9,13 +9,13 @@ import (
 	"strings"
 	"syscall"
 
-	"chainspace.io/blockmania/internal/exitutil"
-	"chainspace.io/blockmania/internal/fsutil"
-	"chainspace.io/blockmania/internal/log"
-	"chainspace.io/blockmania/node"
-	"chainspace.io/blockmania/pubsub"
-	"chainspace.io/blockmania/rest"
-	"chainspace.io/blockmania/txlistener"
+	"github.com/chainspace/blockmania/internal/exitutil"
+	"github.com/chainspace/blockmania/internal/fsutil"
+	"github.com/chainspace/blockmania/internal/log"
+	"github.com/chainspace/blockmania/node"
+	"github.com/chainspace/blockmania/pubsub"
+	"github.com/chainspace/blockmania/rest"
+	"github.com/chainspace/blockmania/txlistener"
 	"github.com/gofrs/flock"
 )
 

@@ -5,7 +5,7 @@ import (
 	"os"
 	"strings"
 
-	"chainspace.io/blockmania/internal/exitutil"
+	"github.com/chainspace/blockmania/internal/exitutil"
 )
 
 func main() {

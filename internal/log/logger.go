@@ -1,4 +1,4 @@
-package log // import "chainspace.io/blockmania/internal/log"
+package log // import "github.com/chainspace/blockmania/internal/log"
 
 import (
 	"fmt"
@@ -7,7 +7,7 @@ import (
 	"sync"
 	"time"
 
-	"chainspace.io/blockmania/internal/exitutil"
+	"github.com/chainspace/blockmania/internal/exitutil"
 )
 
 var bufpool = sync.Pool{

@@ -1,5 +1,5 @@
 // Package blockmania implements the Blockmania consensus algorithm.
-package blockmania // import "chainspace.io/blockmania/blockmania"
+package blockmania // import "github.com/chainspace/blockmania/blockmania"
 
 import (
 	"strconv"

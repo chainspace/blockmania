@@ -1,11 +1,11 @@
 // Package service defines the generic interface for node services.
-package service // import "chainspace.io/blockmania/service"
+package service // import "github.com/chainspace/blockmania/service"
 
 import (
 	"crypto/rand"
 	"time"
 
-	"chainspace.io/blockmania/internal/crypto/signature"
+	"github.com/chainspace/blockmania/internal/crypto/signature"
 
 	"github.com/gogo/protobuf/proto"
 )

@@ -1,4 +1,4 @@
-package internal // import "chainspace.io/blockmania/pubsub/internal"
+package internal // import "github.com/chainspace/blockmania/pubsub/internal"
 
 import (
 	"encoding/binary"

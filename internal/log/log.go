@@ -1,11 +1,11 @@
 // Package log provides support for structured logging.
-package log // import "chainspace.io/blockmania/internal/log"
+package log // import "github.com/chainspace/blockmania/internal/log"
 
 import (
 	"fmt"
 	"os"
 
-	"chainspace.io/blockmania/internal/exitutil"
+	"github.com/chainspace/blockmania/internal/exitutil"
 )
 
 var (

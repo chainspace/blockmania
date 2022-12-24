@@ -1,4 +1,4 @@
-package log // import "chainspace.io/blockmania/internal/log"
+package log // import "github.com/chainspace/blockmania/internal/log"
 
 import (
 	"bufio"

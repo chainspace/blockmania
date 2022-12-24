@@ -1,4 +1,4 @@
-package node // import "chainspace.io/blockmania/node"
+package node // import "github.com/chainspace/blockmania/node"
 
 import (
 	"bytes"
@@ -13,14 +13,14 @@ import (
 	"sync"
 	"time"
 
-	"chainspace.io/blockmania/broadcast"
-	"chainspace.io/blockmania/config"
-	"chainspace.io/blockmania/internal/crypto/signature"
-	"chainspace.io/blockmania/internal/freeport"
-	"chainspace.io/blockmania/internal/log"
-	"chainspace.io/blockmania/internal/log/fld"
-	"chainspace.io/blockmania/network"
-	"chainspace.io/blockmania/service"
+	"github.com/chainspace/blockmania/broadcast"
+	"github.com/chainspace/blockmania/config"
+	"github.com/chainspace/blockmania/internal/crypto/signature"
+	"github.com/chainspace/blockmania/internal/freeport"
+	"github.com/chainspace/blockmania/internal/log"
+	"github.com/chainspace/blockmania/internal/log/fld"
+	"github.com/chainspace/blockmania/network"
+	"github.com/chainspace/blockmania/service"
 	"github.com/gogo/protobuf/proto"
 )
 

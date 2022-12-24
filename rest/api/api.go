@@ -3,10 +3,10 @@ package api
 import (
 	"net/http"
 
-	"chainspace.io/blockmania/internal/log"
-	"chainspace.io/blockmania/internal/log/fld"
-	_ "chainspace.io/blockmania/rest/api/docs"
-	"chainspace.io/blockmania/rest/service"
+	"github.com/chainspace/blockmania/internal/log"
+	"github.com/chainspace/blockmania/internal/log/fld"
+	_ "github.com/chainspace/blockmania/rest/api/docs"
+	"github.com/chainspace/blockmania/rest/service"
 
 	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"

@@ -3,7 +3,7 @@ package broadcast
 import (
 	"path/filepath"
 
-	"chainspace.io/blockmania/blockmania"
+	"github.com/chainspace/blockmania/blockmania"
 
 	"github.com/dgraph-io/badger"
 )

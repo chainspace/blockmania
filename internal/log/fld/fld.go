@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"time"
 
-	"chainspace.io/blockmania/internal/log"
+	"github.com/chainspace/blockmania/internal/log"
 )
 
 // Address log field.

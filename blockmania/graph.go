@@ -6,10 +6,10 @@ import (
 	"sort"
 	"sync"
 
-	"chainspace.io/blockmania/blockmania/messages"
-	"chainspace.io/blockmania/blockmania/states"
-	"chainspace.io/blockmania/internal/log"
-	"chainspace.io/blockmania/internal/log/fld"
+	"github.com/chainspace/blockmania/blockmania/messages"
+	"github.com/chainspace/blockmania/blockmania/states"
+	"github.com/chainspace/blockmania/internal/log"
+	"github.com/chainspace/blockmania/internal/log/fld"
 )
 
 type entry struct {

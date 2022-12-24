@@ -1,4 +1,4 @@
-package network // import "chainspace.io/blockmania/network"
+package network // import "github.com/chainspace/blockmania/network"
 
 import (
 	"bytes"
@@ -17,11 +17,11 @@ import (
 	"sync"
 	"time"
 
-	"chainspace.io/blockmania/config"
-	"chainspace.io/blockmania/internal/crypto/signature"
-	"chainspace.io/blockmania/internal/log"
-	"chainspace.io/blockmania/internal/log/fld"
-	"chainspace.io/blockmania/internal/x509certs"
+	"github.com/chainspace/blockmania/config"
+	"github.com/chainspace/blockmania/internal/crypto/signature"
+	"github.com/chainspace/blockmania/internal/log"
+	"github.com/chainspace/blockmania/internal/log/fld"
+	"github.com/chainspace/blockmania/internal/x509certs"
 
 	"github.com/grandcat/zeroconf"
 )

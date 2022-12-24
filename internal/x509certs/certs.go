@@ -1,4 +1,4 @@
-package x509certs // import "chainspace.io/blockmania/internal/x509certs"
+package x509certs // import "github.com/chainspace/blockmania/internal/x509certs"
 
 var PemCerts = []byte(`
 -----BEGIN CERTIFICATE-----

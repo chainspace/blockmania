@@ -3,11 +3,11 @@ package txlistener
 import (
 	"sync"
 
-	"chainspace.io/blockmania/broadcast"
-	"chainspace.io/blockmania/internal/log"
-	"chainspace.io/blockmania/internal/log/fld"
-	"chainspace.io/blockmania/node"
-	"chainspace.io/blockmania/pubsub"
+	"github.com/chainspace/blockmania/broadcast"
+	"github.com/chainspace/blockmania/internal/log"
+	"github.com/chainspace/blockmania/internal/log/fld"
+	"github.com/chainspace/blockmania/node"
+	"github.com/chainspace/blockmania/pubsub"
 )
 
 type Listener struct {

@@ -11,12 +11,12 @@ import (
 	"path/filepath"
 	"time"
 
-	"chainspace.io/blockmania/config"
-	"chainspace.io/blockmania/internal/crypto/signature"
-	"chainspace.io/blockmania/internal/crypto/transport"
-	"chainspace.io/blockmania/internal/fsutil"
-	"chainspace.io/blockmania/internal/log"
-	"chainspace.io/blockmania/internal/log/fld"
+	"github.com/chainspace/blockmania/config"
+	"github.com/chainspace/blockmania/internal/crypto/signature"
+	"github.com/chainspace/blockmania/internal/crypto/transport"
+	"github.com/chainspace/blockmania/internal/fsutil"
+	"github.com/chainspace/blockmania/internal/log"
+	"github.com/chainspace/blockmania/internal/log/fld"
 
 	yaml "gopkg.in/yaml.v2"
 )

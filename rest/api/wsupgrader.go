@@ -3,7 +3,7 @@ package api
 import (
 	"net/http"
 
-	"chainspace.io/blockmania/rest/service"
+	"github.com/chainspace/blockmania/rest/service"
 	"github.com/gorilla/websocket"
 )
 

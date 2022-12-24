@@ -7,10 +7,10 @@ import (
 	"net/http"
 	"sync"
 
-	"chainspace.io/blockmania/node"
-	"chainspace.io/blockmania/pubsub"
-	"chainspace.io/blockmania/rest/api"
-	"chainspace.io/blockmania/rest/service"
+	"github.com/chainspace/blockmania/node"
+	"github.com/chainspace/blockmania/pubsub"
+	"github.com/chainspace/blockmania/rest/api"
+	"github.com/chainspace/blockmania/rest/service"
 )
 
 type Server struct {

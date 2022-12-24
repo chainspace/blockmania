@@ -1,6 +1,6 @@
 // Package broadcast implements the network broadcast and consensus within a
 // shard.
-package broadcast // import "chainspace.io/blockmania/broadcast"
+package broadcast // import "github.com/chainspace/blockmania/broadcast"
 
 import (
 	"context"
@@ -13,14 +13,14 @@ import (
 	"sync"
 	"time"
 
-	"chainspace.io/blockmania/blockmania"
-	"chainspace.io/blockmania/config"
-	"chainspace.io/blockmania/internal/crypto/signature"
-	"chainspace.io/blockmania/internal/exitutil"
-	"chainspace.io/blockmania/internal/log"
-	"chainspace.io/blockmania/internal/log/fld"
-	"chainspace.io/blockmania/network"
-	"chainspace.io/blockmania/service"
+	"github.com/chainspace/blockmania/blockmania"
+	"github.com/chainspace/blockmania/config"
+	"github.com/chainspace/blockmania/internal/crypto/signature"
+	"github.com/chainspace/blockmania/internal/exitutil"
+	"github.com/chainspace/blockmania/internal/log"
+	"github.com/chainspace/blockmania/internal/log/fld"
+	"github.com/chainspace/blockmania/network"
+	"github.com/chainspace/blockmania/service"
 
 	"github.com/dgraph-io/badger"
 	"github.com/gogo/protobuf/proto"

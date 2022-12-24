@@ -6,7 +6,7 @@ import (
 	"path/filepath"
 	"strconv"
 
-	"chainspace.io/blockmania/config"
+	"github.com/chainspace/blockmania/config"
 )
 
 func LoadConfiguration(networkName, configRoot, runtimeRoot string, nodeID uint64) (*Config, error) {

@@ -1,4 +1,4 @@
-package client // import "chainspace.io/blockmania/pubsub/client"
+package client // import "github.com/chainspace/blockmania/pubsub/client"
 
 import (
 	"context"
@@ -7,7 +7,7 @@ import (
 	"sync"
 	"time"
 
-	"chainspace.io/blockmania/pubsub/internal"
+	"github.com/chainspace/blockmania/pubsub/internal"
 )
 
 type Callback func(nodeID uint64, tx []byte)

@@ -10,8 +10,8 @@ import (
 	"strings"
 	"time"
 
-	"chainspace.io/blockmania/config"
-	"chainspace.io/blockmania/internal/x509certs"
+	"github.com/chainspace/blockmania/config"
+	"github.com/chainspace/blockmania/internal/x509certs"
 
 	"github.com/grandcat/zeroconf"
 )

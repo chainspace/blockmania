@@ -1,4 +1,4 @@
-package pubsub // import "chainspace.io/blockmania/pubsub"
+package pubsub // import "github.com/chainspace/blockmania/pubsub"
 
 import (
 	"encoding/json"
@@ -7,9 +7,9 @@ import (
 	"sync"
 	"time"
 
-	"chainspace.io/blockmania/internal/log"
-	"chainspace.io/blockmania/internal/log/fld"
-	"chainspace.io/blockmania/pubsub/internal"
+	"github.com/chainspace/blockmania/internal/log"
+	"github.com/chainspace/blockmania/internal/log/fld"
+	"github.com/chainspace/blockmania/pubsub/internal"
 )
 
 type Config struct {

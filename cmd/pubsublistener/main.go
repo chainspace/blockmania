@@ -11,7 +11,7 @@ import (
 	"strings"
 	"syscall"
 
-	"chainspace.io/blockmania/pubsub/client"
+	"github.com/chainspace/blockmania/pubsub/client"
 )
 
 var (

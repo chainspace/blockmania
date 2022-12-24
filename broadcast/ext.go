@@ -6,7 +6,7 @@ import (
 	"encoding/binary"
 	"sort"
 
-	"chainspace.io/blockmania/internal/log"
+	"github.com/chainspace/blockmania/internal/log"
 
 	"github.com/gogo/protobuf/proto"
 )

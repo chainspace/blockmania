@@ -1,4 +1,4 @@
-package freeport // import "chainspace.io/blockmania/internal/freeport"
+package freeport // import "github.com/chainspace/blockmania/internal/freeport"
 
 import (
 	"net"

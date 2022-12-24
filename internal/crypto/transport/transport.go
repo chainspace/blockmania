@@ -1,5 +1,5 @@
 // Package transport provides support for transport-layer certificates.
-package transport // import "chainspace.io/blockmania/internal/crypto/transport"
+package transport // import "github.com/chainspace/blockmania/internal/crypto/transport"
 
 import (
 	"bytes"

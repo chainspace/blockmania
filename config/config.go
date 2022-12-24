@@ -1,4 +1,4 @@
-package config // import "chainspace.io/blockmania/config"
+package config // import "github.com/chainspace/blockmania/config"
 
 // NOTE(tav): The order of some of the struct fields are purposefully not in
 // alphabetical order so as to generate a more pleasing ordering when serialised
@@ -9,7 +9,7 @@ import (
 	"strings"
 	"time"
 
-	"chainspace.io/blockmania/internal/log"
+	"github.com/chainspace/blockmania/internal/log"
 	"gopkg.in/yaml.v2"
 )
 

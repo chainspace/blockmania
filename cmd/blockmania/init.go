@@ -6,8 +6,8 @@ import (
 	"strings"
 	"time"
 
-	"chainspace.io/blockmania/config/generate"
-	"chainspace.io/blockmania/internal/fsutil"
+	"github.com/chainspace/blockmania/config/generate"
+	"github.com/chainspace/blockmania/internal/fsutil"
 )
 
 func initCommand(args []string) int {
