@@ -27,7 +27,7 @@ func (s *state) clone(minround uint64) *state {
 			timeouts: map[uint64][]timeout{},
 		}
 	}
-	n := &state{
+	cloned_state := &state{
 		timeout: s.timeout,
 	}
 	if s.bitsets != nil {
@@ -38,7 +38,7 @@ func (s *state) clone(minround uint64) *state {
 			}
 			bitsets[k] = v.clone()
 		}
-		n.bitsets = bitsets
+		cloned_state.bitsets = bitsets
 	}
 	if s.data != nil {
 		data := map[states.StateData]interface{}{}
@@ -48,14 +48,14 @@ func (s *state) clone(minround uint64) *state {
 			}
 			data[k] = v
 		}
-		n.data = data
+		cloned_state.data = data
 	}
 	if s.delay != nil {
 		delay := map[uint64]uint64{}
 		for k, v := range s.delay {
 			delay[k] = v
 		}
-		n.delay = delay
+		cloned_state.delay = delay
 	}
 	if s.final != nil {
 		final := map[nodeRound]string{}
@@ -65,7 +65,7 @@ func (s *state) clone(minround uint64) *state {
 			}
 			final[k] = v
 		}
-		n.final = final
+		cloned_state.final = final
 	}
 	var out []messages.Message
 	for _, msg := range s.out {
@@ -75,7 +75,7 @@ func (s *state) clone(minround uint64) *state {
 		}
 		out = append(out, msg)
 	}
-	n.out = out
+	cloned_state.out = out
 	timeouts := map[uint64][]timeout{}
 	for k, v := range s.timeouts {
 		if k < minround {
@@ -83,8 +83,8 @@ func (s *state) clone(minround uint64) *state {
 		}
 		timeouts[k] = v
 	}
-	n.timeouts = timeouts
-	return n
+	cloned_state.timeouts = timeouts
+	return cloned_state
 }
 
 func (s *state) getBitset(size int, pp messages.PrePrepare) *bitset {
