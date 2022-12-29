@@ -439,12 +439,12 @@ func (graph *Graph) processMessages(s *state, processed map[messages.Message]boo
 func (graph *Graph) run() {
 	for {
 		select {
-		case data := <-graph.entries:
-			entries := make([]*entry, len(data.Deps))
+		case blockGraph := <-graph.entries:
+			entries := make([]*entry, len(blockGraph.Deps))
 			graph.mutex.Lock()
-			max := data.Block.Round
+			max := blockGraph.Block.Round
 			round := graph.round
-			for i, dep := range data.Deps {
+			for i, dep := range blockGraph.Deps {
 				if log.AtDebug() {
 					log.Debug("Dep:", fld.BlockID(dep.Block))
 				}
@@ -485,8 +485,8 @@ func (graph *Graph) run() {
 				}
 			}
 			rcheck := false
-			if data.Block.Round != 1 {
-				pmax, exists := graph.max[data.Prev]
+			if blockGraph.Block.Round != 1 {
+				pmax, exists := graph.max[blockGraph.Prev]
 				if !exists {
 					rcheck = true
 				} else if pmax > max {
@@ -496,9 +496,9 @@ func (graph *Graph) run() {
 			if rcheck && round > max {
 				max = round
 			}
-			graph.max[data.Block] = max
+			graph.max[blockGraph.Block] = max
 			graph.blocks = append(graph.blocks, &blockInfo{
-				data: data,
+				data: blockGraph,
 				max:  max,
 			})
 			graph.mutex.Unlock()
@@ -506,12 +506,12 @@ func (graph *Graph) run() {
 				graph.process(e)
 			}
 			self := &entry{
-				block: data.Block,
-				prev:  data.Prev,
+				block: blockGraph.Block,
+				prev:  blockGraph.Prev,
 			}
-			self.deps = make([]BlockID, len(data.Deps)+1)
-			self.deps[0] = data.Prev
-			for i, dep := range data.Deps {
+			self.deps = make([]BlockID, len(blockGraph.Deps)+1)
+			self.deps[0] = blockGraph.Prev
+			for i, dep := range blockGraph.Deps {
 				self.deps[i+1] = dep.Block
 			}
 			graph.process(self)
