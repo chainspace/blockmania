@@ -53,7 +53,7 @@ var _ = Describe("Bitset", func() {
 			})
 		})
 
-		Context("when the commit does not exists", func() {
+		Context("when the commit does not exist", func() {
 			It("should return false", func() {
 				actual := b.hasCommit(1)
 				expected := false
