@@ -610,7 +610,7 @@ func (s *Service) loadState() {
 	})
 	gcfg := &blockmania.Config{
 		LastInterpreted: interpreted,
-		Nodes:           nodes,
+		Peers:           nodes,
 		SelfID:          s.nodeID,
 		TotalNodes:      s.top.TotalNodes(),
 	}
